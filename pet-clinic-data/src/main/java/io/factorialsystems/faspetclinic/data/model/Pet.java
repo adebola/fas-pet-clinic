@@ -1,4 +1,4 @@
-package io.factorialsystems.faspetclinic.model;
+package io.factorialsystems.faspetclinic.data.model;
 
 import java.time.LocalDate;
 
