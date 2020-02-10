@@ -1,13 +1,11 @@
 package io.factorialsystems.faspetclinic.data.services.map;
 
 import io.factorialsystems.faspetclinic.data.model.Vet;
-import io.factorialsystems.faspetclinic.data.services.BaseService;
-import org.springframework.stereotype.Service;
+import io.factorialsystems.faspetclinic.data.services.VetService;
 
 import java.util.Set;
 
-@Service
-public class VetMapServiceImpl extends AbstractMapService<Vet, Long> implements BaseService<Vet, Long> {
+public class VetMapServiceImpl extends AbstractMapService<Vet, Long> implements VetService {
     @Override
     public Set<Vet> findAll() {
         return super.findAll();

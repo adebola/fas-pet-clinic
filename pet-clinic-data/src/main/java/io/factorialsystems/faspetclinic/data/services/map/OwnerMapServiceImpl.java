@@ -1,13 +1,11 @@
 package io.factorialsystems.faspetclinic.data.services.map;
 
 import io.factorialsystems.faspetclinic.data.model.Owner;
-import io.factorialsystems.faspetclinic.data.services.BaseService;
-import org.springframework.stereotype.Service;
+import io.factorialsystems.faspetclinic.data.services.OwnerService;
 
 import java.util.Set;
 
-@Service
-public class OwnerMapServiceImpl extends AbstractMapService<Owner, Long> implements BaseService<Owner, Long> {
+public class OwnerMapServiceImpl extends AbstractMapService<Owner, Long> implements OwnerService {
 
     @Override
     public Set<Owner> findAll() {
@@ -32,5 +30,10 @@ public class OwnerMapServiceImpl extends AbstractMapService<Owner, Long> impleme
     @Override
     public void delete(Owner owner) {
         super.deleteByObject(owner);
+    }
+
+    @Override
+    public Owner findByLastName(String lastName) {
+        return null;
     }
 }
