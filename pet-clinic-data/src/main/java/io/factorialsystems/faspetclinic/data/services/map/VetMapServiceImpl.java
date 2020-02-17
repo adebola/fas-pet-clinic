@@ -2,9 +2,11 @@ package io.factorialsystems.faspetclinic.data.services.map;
 
 import io.factorialsystems.faspetclinic.data.model.Vet;
 import io.factorialsystems.faspetclinic.data.services.VetService;
+import org.springframework.stereotype.Service;
 
 import java.util.Set;
 
+@Service
 public class VetMapServiceImpl extends AbstractMapService<Vet, Long> implements VetService {
     @Override
     public Set<Vet> findAll() {
@@ -18,7 +20,7 @@ public class VetMapServiceImpl extends AbstractMapService<Vet, Long> implements 
 
     @Override
     public Vet save(Vet vet) {
-        return super.save(vet.getId(), vet);
+        return super.save(vet);
     }
 
     @Override

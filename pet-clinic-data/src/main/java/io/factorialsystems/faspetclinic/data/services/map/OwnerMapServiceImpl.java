@@ -2,9 +2,11 @@ package io.factorialsystems.faspetclinic.data.services.map;
 
 import io.factorialsystems.faspetclinic.data.model.Owner;
 import io.factorialsystems.faspetclinic.data.services.OwnerService;
+import org.springframework.stereotype.Service;
 
 import java.util.Set;
 
+@Service
 public class OwnerMapServiceImpl extends AbstractMapService<Owner, Long> implements OwnerService {
 
     @Override
@@ -24,7 +26,7 @@ public class OwnerMapServiceImpl extends AbstractMapService<Owner, Long> impleme
 
     @Override
     public Owner save(Owner owner) {
-        return super.save(owner.getId(), owner);
+        return super.save(owner);
     }
 
     @Override
