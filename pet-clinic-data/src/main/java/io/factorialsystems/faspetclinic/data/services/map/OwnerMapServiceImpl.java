@@ -1,13 +1,25 @@
 package io.factorialsystems.faspetclinic.data.services.map;
 
 import io.factorialsystems.faspetclinic.data.model.Owner;
+import io.factorialsystems.faspetclinic.data.model.Pet;
 import io.factorialsystems.faspetclinic.data.services.OwnerService;
+import io.factorialsystems.faspetclinic.data.services.PetService;
+import io.factorialsystems.faspetclinic.data.services.PetTypeService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;
 
 @Service
 public class OwnerMapServiceImpl extends AbstractMapService<Owner, Long> implements OwnerService {
+    private final PetTypeService petTypeService;
+    private final PetService petService;
+
+    @Autowired
+    public OwnerMapServiceImpl(PetTypeService petTypeService, PetService petService) {
+        this.petTypeService = petTypeService;
+        this.petService = petService;
+    }
 
     @Override
     public Set<Owner> findAll() {
@@ -26,7 +38,27 @@ public class OwnerMapServiceImpl extends AbstractMapService<Owner, Long> impleme
 
     @Override
     public Owner save(Owner owner) {
-        return super.save(owner);
+        if (owner == null) {
+            return null;
+        } else {
+            if (owner.getPets() != null) {
+                owner.getPets().forEach(pet -> {
+                    if (pet.getPetType() != null) {
+                        if (pet.getPetType().getId() == null) {
+                            pet.setPetType(petTypeService.save(pet.getPetType()));
+                        }
+                    } else {
+                        throw new RuntimeException("PetType is required");
+                    }
+
+                    if (pet.getId() == null) {
+                        Pet savedPet = petService.save(pet);
+                        pet.setId(savedPet.getId());
+                    }
+                });
+            }
+            return super.save(owner);
+        }
     }
 
     @Override

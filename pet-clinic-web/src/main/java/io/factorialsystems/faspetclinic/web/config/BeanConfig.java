@@ -1,6 +1,5 @@
 package io.factorialsystems.faspetclinic.web.config;
 
-import io.factorialsystems.faspetclinic.data.services.OwnerService;
 import io.factorialsystems.faspetclinic.data.services.VetService;
 import io.factorialsystems.faspetclinic.data.services.map.OwnerMapServiceImpl;
 import io.factorialsystems.faspetclinic.data.services.map.VetMapServiceImpl;
@@ -9,8 +8,9 @@ import io.factorialsystems.faspetclinic.data.services.map.VetMapServiceImpl;
 public class BeanConfig {
 
     //@Bean
-    OwnerService getOwnerService() {
-        return new OwnerMapServiceImpl();
+    OwnerMapServiceImpl getOwnerService() {
+        return null;
+        //return new OwnerMapServiceImpl();
     }
 
     //@Bean
