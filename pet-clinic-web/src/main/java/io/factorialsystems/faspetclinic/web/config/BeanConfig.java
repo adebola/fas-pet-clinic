@@ -15,6 +15,7 @@ public class BeanConfig {
 
     //@Bean
     VetService getVetService() {
-        return new VetMapServiceImpl();
+        return null;
+        // return new VetMapServiceImpl();
     }
 }
