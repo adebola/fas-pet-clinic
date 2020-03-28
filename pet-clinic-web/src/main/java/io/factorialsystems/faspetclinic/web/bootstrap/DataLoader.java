@@ -1,10 +1,7 @@
 package io.factorialsystems.faspetclinic.web.bootstrap;
 
 import io.factorialsystems.faspetclinic.data.model.*;
-import io.factorialsystems.faspetclinic.data.services.OwnerService;
-import io.factorialsystems.faspetclinic.data.services.PetTypeService;
-import io.factorialsystems.faspetclinic.data.services.SpecialtyService;
-import io.factorialsystems.faspetclinic.data.services.VetService;
+import io.factorialsystems.faspetclinic.data.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -18,13 +15,18 @@ public class DataLoader implements CommandLineRunner {
     private final VetService vetService;
     private final PetTypeService petTypeService;
     private final SpecialtyService specialtyService;
+    private final VisitService visitService;
+    private final PetService petService;
 
     @Autowired
-    public DataLoader(OwnerService ownerService, VetService vetService, PetTypeService petTypeService, SpecialtyService specialtyService) {
+    public DataLoader(OwnerService ownerService, VetService vetService, PetTypeService petTypeService,
+                      SpecialtyService specialtyService, VisitService visitService, PetService petService) {
         this.ownerService = ownerService;
         this.vetService = vetService;
         this.petTypeService = petTypeService;
         this.specialtyService = specialtyService;
+        this.visitService = visitService;
+        this.petService = petService;
     }
 
     @Override
@@ -36,10 +38,10 @@ public class DataLoader implements CommandLineRunner {
 
     private void LoadMapData() {
         PetType dog = new PetType();
-        dog.setName("Billy");
+        dog.setName("Dog");
 
         PetType cat = new PetType();
-        cat.setName("short");
+        cat.setName("Cat");
 
         PetType savedDog = petTypeService.save(dog);
         PetType savedCat = petTypeService.save(cat);
@@ -69,6 +71,7 @@ public class DataLoader implements CommandLineRunner {
         pet1.setName("Bingo");
         pet1.setBirthDate(LocalDate.now());
         pet1.setOwner(owner1);
+        petService.save(pet1);
         owner1.getPets().add(pet1);
 
         Owner owner2 = new Owner();
@@ -85,6 +88,23 @@ public class DataLoader implements CommandLineRunner {
         pet2.setBirthDate(LocalDate.now());
         pet2.setOwner(owner2);
         owner2.getPets().add(pet2);
+        petService.save(pet2);
+
+        Visit catVisit = new Visit();
+        catVisit.setPet(pet2);
+        catVisit.setDate(LocalDate.now());
+        catVisit.setDescription("Plenty Talk");
+        visitService.save(catVisit);
+
+        Owner owner3 = Owner.builder().address("25 Valerian, Northern Forshore Estate")
+                .city("Lagos").telephone("08055572307").firstName("Adebola").lastName("Omoboya").build();
+
+        ownerService.save(owner3);
+        Pet pet3 = Pet.builder().petType(savedCat).birthDate(LocalDate.now()).name("Who Knows").owner(owner3).build();
+        owner3.getPets().add(pet3);
+        petService.save(pet3);
+        Visit visit = Visit.builder().pet(pet3).date(LocalDate.now()).description("had to Visit").build();
+        visitService.save(visit);
 
         System.out.println("Loaded Owners");
 

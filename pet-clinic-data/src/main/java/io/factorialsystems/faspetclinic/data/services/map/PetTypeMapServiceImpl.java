@@ -3,11 +3,13 @@ package io.factorialsystems.faspetclinic.data.services.map;
 import io.factorialsystems.faspetclinic.data.model.Owner;
 import io.factorialsystems.faspetclinic.data.model.PetType;
 import io.factorialsystems.faspetclinic.data.services.PetTypeService;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;
 
 @Service
+@Profile({"default", "mapdata"})
 public class PetTypeMapServiceImpl extends AbstractMapService<PetType, Long> implements PetTypeService {
 
     @Override

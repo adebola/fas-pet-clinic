@@ -6,11 +6,13 @@ import io.factorialsystems.faspetclinic.data.services.OwnerService;
 import io.factorialsystems.faspetclinic.data.services.PetService;
 import io.factorialsystems.faspetclinic.data.services.PetTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;
 
 @Service
+@Profile({"default", "mapdata"})
 public class OwnerMapServiceImpl extends AbstractMapService<Owner, Long> implements OwnerService {
     private final PetTypeService petTypeService;
     private final PetService petService;
@@ -68,6 +70,11 @@ public class OwnerMapServiceImpl extends AbstractMapService<Owner, Long> impleme
 
     @Override
     public Owner findByLastName(String lastName) {
-        return null;
+
+        return findAll()
+                .stream()
+                .filter(owner -> owner.getLastName().equalsIgnoreCase(lastName))
+                .findFirst()
+                .orElse(null);
     }
 }
